@@ -21,10 +21,7 @@ namespace LCU.State.API.LowCodeUnit.Reporting.Management
 
             var entityId = new EntityId(typeof(ReportingManagementState).Name, actArgs.StateDetails.Username);
 
-            await ctx.CallEntityAsync<object>(entityId, "SavePowerBIConnection", new
-            {
-                PowerBIConnection = "xcv"
-            });
+            await ctx.CallEntityAsync<object>(entityId, "SavePowerBIConnection", actArgs.ActionRequest);
 
             return Status.Success;
         }

@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using LCU.StateAPI.Utilities;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using LCU.Presentation.State.ReqRes;
+using LCU.State.API.LowCodeUnit.Reporting.Management.Models;
 
 namespace LCU.State.API.LowCodeUnit.Reporting.Management
 {
@@ -21,7 +22,7 @@ namespace LCU.State.API.LowCodeUnit.Reporting.Management
         #endregion
 
         #region Properties 
-        public virtual string PowerBIConnection { get; set; }
+        public virtual PowerBIModel PowerBI { get; set; }
 
         public virtual StateDetails StateDetails { get; set; }
         #endregion
@@ -34,9 +35,9 @@ namespace LCU.State.API.LowCodeUnit.Reporting.Management
         #endregion
 
         #region API Methods
-        public virtual void SavePowerBIConnection(string powerBiConnection, string powerBiOtherThing)
+        public virtual void SavePowerBIConnection(PowerBIModel powerBi)
         {
-            PowerBIConnection = powerBiConnection;
+            PowerBI = powerBi;
         }
         #endregion
     }
@@ -58,7 +59,7 @@ namespace LCU.State.API.LowCodeUnit.Reporting.Management
                 case "savepowerbiconnection":
                     var actionReq = ctx.GetInput<ExecuteActionRequest>();
 
-                    state.SavePowerBIConnection(actionReq.Arguments.Metadata["PowerBIConnection"].ToString(), "");
+                    state.SavePowerBIConnection(actionReq.Arguments.Metadata["PowerBI"].ToObject<PowerBIModel>());
                     break;
             }
 
