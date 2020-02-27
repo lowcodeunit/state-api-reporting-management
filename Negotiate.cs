@@ -16,7 +16,7 @@ namespace LCU.State.API.LowCodeUnit.Reporting.Management
         [FunctionName("negotiate")]
         public static SignalRConnectionInfo Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "options")] HttpRequest req,
-            [SignalRConnectionInfo(HubName = ReportingManagementState.HUB_NAME)] SignalRConnectionInfo connectionInfo)
+            [SignalRConnectionInfo(HubName = ReportingManagementState.HUB_NAME, UserId = "{headers.x-ms-client-principal-id}")] SignalRConnectionInfo connectionInfo)
         {
             return connectionInfo;
         }
