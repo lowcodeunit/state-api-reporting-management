@@ -42,7 +42,7 @@ namespace LCU.State.API.LowCodeUnit.Reporting.Management
         {
             return await stateBlob.WithStateAction<ReportingManagementState, SavePowerBIConnectionRequest>(req, signalRMessages, log, async (state, reportingConnReq) =>
             {
-                log.LogInformation($"Executing SetUserDetails Action.");
+                log.LogInformation($"Executing SavePowerBIConnection Action.");
 
                 state.SavePowerBIConnection(reportingConnReq);//(reportingConnReq.Username, reportingConnReq.Password, reportingConnReq.ApiUrl, reportingConnReq.AuthorityUrl, reportingConnReq.ClientID, reportingConnReq.GroupID, reportingConnReq.ResourceUrl);
 
