@@ -28,9 +28,8 @@ namespace LCU.State.API.LowCodeUnit.Reporting.Management
         #endregion
 
         #region Constructors
-        public ReportingManagementState(StateDetails stateDetails)
+        public ReportingManagementState()
         {
-            this.StateDetails = stateDetails;
         }
         #endregion
 
@@ -42,32 +41,32 @@ namespace LCU.State.API.LowCodeUnit.Reporting.Management
         #endregion
     }
 
-    public static class ReportingManagementStateEntity
-    {
-        [FunctionName("ReportingManagementState")]
-        public static void Run([EntityTrigger] IDurableEntityContext ctx, ILogger log)
-        {
-            var action = ctx.OperationName.ToLowerInvariant();
+    // public static class ReportingManagementStateEntity
+    // {
+    //     [FunctionName("ReportingManagementState")]
+    //     public static void Run([EntityTrigger] IDurableEntityContext ctx, ILogger log)
+    //     {
+    //         var action = ctx.OperationName.ToLowerInvariant();
 
-            var state = ctx.GetState<ReportingManagementState>();
+    //         var state = ctx.GetState<ReportingManagementState>();
 
-            if (action == "$init" && state == null)
-                state = new ReportingManagementState(ctx.GetInput<StateDetails>());
+    //         if (action == "$init" && state == null)
+    //             state = new ReportingManagementState(ctx.GetInput<StateDetails>());
 
-            switch (action)
-            {
-                case "savepowerbiconnection":
-                    var actionReq = ctx.GetInput<ExecuteActionRequest>();
+    //         switch (action)
+    //         {
+    //             case "savepowerbiconnection":
+    //                 var actionReq = ctx.GetInput<ExecuteActionRequest>();
 
-                    state.SavePowerBIConnection(actionReq.Arguments.Metadata["PowerBI"].ToObject<PowerBIModel>());
-                    break;
-            }
+    //                 state.SavePowerBIConnection(actionReq.Arguments.Metadata["PowerBI"].ToObject<PowerBIModel>());
+    //                 break;
+    //         }
 
-            ctx.SetState(state);
+    //         ctx.SetState(state);
 
-            ctx.StartNewOrchestration("SendState", state);
+    //         ctx.StartNewOrchestration("SendState", state);
 
-            // ctx.Return(state);
-        }
-    }
+    //         // ctx.Return(state);
+    //     }
+    // }
 }
